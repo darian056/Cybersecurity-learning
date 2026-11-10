@@ -1,0 +1,15 @@
+2026-11-09 16:23:45 | FILE CREATED | C:\Users\daria\Documents\FIM\new | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2026-11-09 16:23:48 | MODIFIED | C:\Users\daria\Documents\FIM\new | 6511c5688bbb87798128695a283411a26da532df06e6e931a53416e379ddda0e
+2026-11-09 16:23:53 | DELETED | C:\Users\daria\Documents\FIM\new | 6511c5688bbb87798128695a283411a26da532df06e6e931a53416e379ddda0e2026-11-09 16:37:46 | FILE CREATED | C:\Users\daria\Documents\FIM\fsaf.txt | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+2026-11-09 16:37:49 | MODIFIED | C:\Users\daria\Documents\FIM\fsaf.txt | a0566e5c4d077424a7be39d95d1308488c81b7b49274588bf9f5b2eb13554ac4
+2026-11-09 16:37:53 | DELETED | C:\Users\daria\Documents\FIM\fsaf.txt | a0566e5c4d077424a7be39d95d1308488c81b7b49274588bf9f5b2eb13554ac42026-11-09 17:10:03 | FILE CREATED | C:\Users\daria\Documents\FIM\fim_data\baseline.txt | f2248f770f7d5bb58f6fd32138153388985f72a7cecddc12036d1ab60b1658e1
+2026-11-09 17:10:16 | MODIFIED | C:\Users\daria\Documents\FIM\testfolder\yes.txt | ef0b9eac657f8d7daf2a479455e666617e3270b89b170b42f0a1084363e082dc
+2026-11-09 17:10:17 | MODIFIED | C:\Users\daria\Documents\FIM\fim_data\baseline.txt | 67d0035f6953d947157ab11f9a436ea49c869ef67420c34a15b6964499d3297a
+2026-11-09 17:12:06 | MODIFIED | C:\Users\daria\Documents\FIM\recursive_monitor.py | cc712c7ac9a4a1e49a78445ec817f6cef5b49fc4e00b2b86a071eb69c5f6d25c
+2026-11-09 17:12:06 | MODIFIED | C:\Users\daria\Documents\FIM\fim_data\baseline.txt | b30f6355254f1d892a3d7a2148e7dedf0555659cfcdf283c99b05405f6fa8191
+2026-11-09 17:12:13 | MODIFIED | C:\Users\daria\Documents\FIM\recursive_monitor.py | 7d2c2c8a2d227088f68b171367098a1c263d62de5aa4e01fe11dbcd54cda6d55
+2026-11-09 17:12:13 | MODIFIED | C:\Users\daria\Documents\FIM\fim_data\baseline.txt | e8769e7be696f2bca1a632ce1d4f5132046d741eefe79fb37cdcf5adff0f8a81
+2026-11-09 17:12:16 | MODIFIED | C:\Users\daria\Documents\FIM\baselineengine.py | a34cea2a80c405452f95640fc3ef86ed5b910b6dcf8a77b50f18bd7959f01f03
+2026-11-09 17:12:16 | MODIFIED | C:\Users\daria\Documents\FIM\fim_data\baseline.txt | 35974b9928bbd5796880973c99d676431823cb296a6625d873b0bc94c20ca99d
+2026-11-09 17:12:30 | MODIFIED | C:\Users\daria\Documents\FIM\testfolder\yes.txt | 8157f7f6e1bc88e033b685199d48863f2fef7b1319a2f0a67a7e219aa502b3bd
+2026-11-09 17:12:43 | FILE CREATED | C:\Users\daria\Documents\FIM\testfolder\fs\folderinfilder | e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
