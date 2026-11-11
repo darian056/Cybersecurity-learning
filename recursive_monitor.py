@@ -1,91 +1,81 @@
 import baselineengine
 import os
-import hashlib
 from pathlib import Path
 import time
 from colorama import Fore, Back, Style, init
+import sys
+from watchdog.events import FileSystemEvent, FileSystemEventHandler
+from watchdog.observers import Observer
 
 
 
-def scanner(b_path, userin):
 
-    root = Path.cwd()
-    logP = root / "fim_Logs"
-    DataDir = root / "fim_data"
+class MyEventHandler(FileSystemEventHandler):
+    def __init__(self):
+        super().__init__()
+        p = Path.cwd()
+        self.logs_dir = (p / "fim_Logs").resolve()
+        self.data_dir = (p / "fim_data").resolve()       
+
+    def should_ignore(self, p):
+        resolved_path = Path(p).resolve()
+
+        if resolved_path.is_relative_to(self.data_dir) or resolved_path.is_relative_to(self.logs_dir):
+            return True
+        return False
+
+    def on_modified(self, event):
+        if event.is_directory or self.should_ignore(event.src_path):
+            return
+        print(f"File modified: {event.src_path}")
+        baselineengine.Logs(event.src_path)
+        
+
+    def on_created(self, event):
+        if event.is_directory or self.should_ignore(event.src_path):
+            return
+        print(f"File created: {event.src_path}")
+        baselineengine.Logs(event.src_path)
+
+    def on_deleted(self, event):
+        if event.is_directory or self.should_ignore(event.src_path):
+            return
+        print(f"File deleted: {event.src_path}")
+        baselineengine.Logs(event.src_path, "DELETED")
+
+        
 
 
-    if userin.casefold() == "a":
-        baselineengine.option_a(b_path) #calling A
 
-    elif userin.casefold() == "b":
-        fileHashDict = baselineengine.option_b(b_path) # calling B
+def start_fim_daemon():
+    try:
+        event_handler = MyEventHandler()
+        w_path = Path.cwd()
+        observer = Observer()
+        observer.schedule(event_handler, path=str(w_path), recursive=True)
+        observer.start()
+        while True:
 
-        while(True):
+
+
             time.sleep(1)
-
-            p = Path.cwd() # this is giving me the path for the current folder im in
-             # this is listing folders and filenames
-            
-            for f in p.rglob("*"):
-
-
-                
-                if f.is_relative_to(DataDir):
-                    continue
-                if f.is_relative_to(logP):
-                    continue
-                if not f.is_file():
-                    continue
+    except KeyboardInterrupt:
+        print("Stopping Daemon")
+        observer.stop()
+    observer.join()
 
 
-                file_path_str = str(Path(f).resolve())
-                path_hash = baselineengine.Calculate_File_hash(str(f)) # sending the file to be hashed 
 
-                parts = path_hash.split("|")  # after returning it I split it
 
-                current_hash = parts[1].strip()
-                
-                if file_path_str not in fileHashDict:
-                    print(Fore.BLUE + "New file created: ", file_path_str)
-                    fileHashDict[file_path_str] = current_hash
-                    baselineengine.Logs(file_path_str, "FILE CREATED")
-                    
-                else:
-                    oldHash = fileHashDict[file_path_str]
+   
 
-                    if current_hash != oldHash:
-                        print(Fore.RED + "file has been changed: ", file_path_str)
-                        baselineengine.Logs(str(f), "MODIFIED")
-                        new_hash = baselineengine.Calculate_File_hash(str(f))
-                        
-                        with open(b_path, "r") as file:
-                            lines = file.readlines()
 
-                        with open(b_path, "w") as file:
-                            for line in lines:
-                                if oldHash in line:
-                                    file.write(new_hash)
-                                else:
-                                    file.write(line)
-                                    
-                        fileHashDict[file_path_str] = current_hash
-                        
-                    else:
-                        pass
-                        
-            tracked_files = list(fileHashDict.keys())
-            for tracked in tracked_files:
-                if not os.path.exists(tracked):
-                    print(Fore.RED+"File deleted: ", tracked)
 
-                    baselineengine.Logs(tracked, "DELETED", fileHashDict[tracked])
 
-                    del fileHashDict[tracked]
 
-                    with open(b_path, "r") as file:
-                        line = file.readlines()
 
-                    with open(b_path, "w") as file:
-                        for lines in line:
-                            if tracked not in lines:
-                                file.writelines(lines)
+
+
+
+
+

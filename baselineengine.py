@@ -1,9 +1,10 @@
 import recursive_monitor
-import os
+import sys
 import hashlib
 from pathlib import Path
 import time
 from colorama import Fore, Back, Style, init
+import logging
 
 
 
@@ -21,25 +22,30 @@ def Calculate_File_hash(path):
 import time
 from pathlib import Path
 
-def Logs(path, event, old_hash=None):
+def Logs(path, event=None):
     log_dir = Path("fim_Logs")
     log_dir.mkdir(exist_ok=True)
-    l_path = log_dir / "Logs.txt"
-    
-    full_date_and_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    logging.basicConfig(
+    filename=log_dir / 'dev.log',
+    filemode='a',
+    level=logging.INFO,
+    format='%(asctime)s %(process)d %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    force=True)
+
+    resolved_path = Path(path).resolve()
 
     if event == "DELETED":
-        log_data = f"{full_date_and_time} | {event} | {Path(path).resolve()} | {old_hash}"
+        message = f"{event} | {resolved_path}"
     else:
-        path_hash = Calculate_File_hash(path)
-        log_data = f"{full_date_and_time} | {event} | {path_hash}"
+        message = f"{event} | {resolved_path}" 
 
-    with open(l_path, "a") as file:
-        log = file.write(log_data)
-        
-    return log
+    logging.info(message)
 
 def option_a(b_path):
+
+        b_path.parent.mkdir(exist_ok=True)
+
         if b_path.exists():
             b_path.unlink()
 
@@ -74,13 +80,12 @@ def option_b(b_path):
                 continue
             elif f.is_relative_to(logs_dir):
                 continue
-            else:
-                for line in file:
-                    parts = line.strip().split(" | ")
-                    if len(parts) == 2:
-                        fileHashDict[str(Path(parts[0]).resolve())] = parts[1]
+        for line in file:
+            parts = line.strip().split(" | ")
+            if len(parts) == 2:
+                fileHashDict[str(Path(parts[0]).resolve())] = parts[1]
 
-    return fileHashDict
+    recursive_monitor.start_fim_daemon()
 
 
 if __name__ == "__main__":
@@ -90,15 +95,17 @@ if __name__ == "__main__":
 
     userin = input("Please enter A or B: ")
 
-    # Setup the data directory and baseline path using Pathlib
-    data_dir = Path("fim_data")
-    data_dir.mkdir(exist_ok=True)
-    b_path = data_dir / "baseline.txt"
+    path = Path.cwd()
+    b_path = path / "fim_data" / "baseline.txt"
 
-    recursive_monitor.scanner(b_path,userin)
-            
+
+
+    if userin == "A":
+        option_a(b_path)
+    elif userin == "B":
+        option_b(b_path)
+
         
-
 
 
 
