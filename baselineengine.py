@@ -1,12 +1,8 @@
 import recursive_monitor
-import sys
 import hashlib
 from pathlib import Path
-import time
 from colorama import Fore, Back, Style, init
 import logging
-
-
 
 
 
@@ -19,8 +15,6 @@ def Calculate_File_hash(path):
 
     return f_path_hash
 
-import time
-from pathlib import Path
 
 def Logs(path, event=None):
     log_dir = Path("fim_Logs")
@@ -30,8 +24,7 @@ def Logs(path, event=None):
     filemode='a',
     level=logging.INFO,
     format='%(asctime)s %(process)d %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S',
-    force=True)
+    datefmt='%Y-%m-%d %H:%M:%S')
 
     resolved_path = Path(path).resolve()
 
@@ -93,16 +86,16 @@ if __name__ == "__main__":
     print("What would you like to do?")
     print("A) Collect new Baseline? \nB) Begin monitoring files with saved Baseline")
 
-    userin = input("Please enter A or B: ")
+    userin = input("Please enter A or B: ").strip().lower()
 
     path = Path.cwd()
     b_path = path / "fim_data" / "baseline.txt"
 
 
 
-    if userin == "A":
+    if userin == "a":
         option_a(b_path)
-    elif userin == "B":
+    elif userin == "b":
         option_b(b_path)
 
         
